@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<style>
+.swiper-container-wrapper {
+  position: relative;
+}
+.swiper-button-next:focus,
+.swiper-button-prev:focus {
+  outline: none;
+}
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 36px;
+  content: '';
+}
+.swiper-button-prev::after {
+  border-right-color: #faf4f1;
+}
+.swiper-button-next::after {
+  border-left-color: #faf4f1;
+}
+.swiper-button-prev:focus::after {
+  border-right-color: #faf4f1b8;
+}
+.swiper-button-next:focus::after {
+  border-left-color: #faf4f1b8;
+}
+
+@media (max-width: 991px) {
+  .swiper-button-prev::after,
+  .swiper-button-next::after {
+    border-width: 20px;
+  }
+}
+</style>

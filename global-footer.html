@@ -1,4 +1,130 @@
 <script>
+  ready(function () {
+    handleMobileNavState();
+    removeInvisibleElements();
+    // addScrollToTopButton();
+    // toggleAccordions();
+  });
+
+  function ready(callback) {
+    if (document.readyState != 'loading') callback();
+    else if (document.addEventListener) document.addEventListener('DOMContentLoaded', callback);
+    else document.attachEvent('onreadystatechange', function () {
+      if (document.readyState == 'complete') callback();
+    });
+  }
+
+  // window.onscroll = function () {
+  //   scrollFunction();
+  // };
+
+  const header = document.getElementById('nav');
+  const hamburger = document.getElementById('hamburger');
+
+  // function scrollFunction() {
+  //   setTimeout(function () {
+  //     if (window.pageYOffset > 550) {
+  //       header.classList.add('scrolled');
+  //     } else {
+  //       header.classList.remove('scrolled');
+  //     }
+  //   }, 350);
+  // }
+
+  function toggleMobileMenu(event) {
+    document.body.classList.toggle('menu-opened');
+    hamburger.setAttribute('aria-expanded', 'true');
+    toggleCloseArea();
+  }
+
+  function insideClickListener(event) {
+    const isClickInside = header.contains(event.target);
+
+    if (!isClickInside) {
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('menu-opened');
+    }
+  }
+
+  function toggleCloseArea() {
+    if (document.body.classList.contains('menu-opened')) {
+      document.addEventListener('click', insideClickListener);
+    } else {
+      document.removeEventListener('click', insideClickListener);
+    }
+  }
+
+  function handleMobileNavState() {
+    hamburger.addEventListener('click', toggleMobileMenu);
+  }
+
+  function removeInvisibleElements() {
+    const allWebflowHiddenEls = document.querySelectorAll('.w-condition-invisible');
+    for (let i = 0; i < allWebflowHiddenEls.length; i++) {
+      allWebflowHiddenEls[i].remove();
+    }
+  }
+
+  function addScrollToTopButton() {
+    const img = document.createElement('img');
+    const text = document.createElement('span');
+    const btn = document.createElement('div');
+
+    // build img
+    img.src = '//uploads-ssl.webflow.com/5eb41e3d0505e2474e28450a/5ed95d3cc76b3bbc6b116f5e_arrows-up.svg';
+
+    // build and style text
+    text.innerText = 'Back to top';
+    text.setAttribute('style', 'text-transform:uppercase;text-decoration:underline;font-weight:bold;color:#EA0029;line-height:1.25;padding-top:10px;');
+
+    // position button in corner, hidden for now
+    btn.setAttribute('style', 'position:fixed;bottom:10px;right:10px;visibility:hidden;opacity:0;transition:all 250ms ease;cursor:pointer;width:51px;display:flex;flex-direction:column;');
+    // add img and text inside button
+    btn.append(img, text);
+    // add button to bottom of Body
+    document.body.appendChild(btn);
+
+    // scroll up on click
+    btn.addEventListener('click', scrollMeUp);
+    function scrollMeUp() {
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    // show button when scroll past 1000px from top
+    window.addEventListener('scroll', scrollFunctionButton);
+    function scrollFunctionButton() {
+      setTimeout(function () {
+        if (window.pageYOffset > 1000) {
+          btn.style.visibility = 'visible';
+          btn.style.opacity = '1';
+        } else {
+          btn.style.visibility = 'hidden';
+          btn.style.opacity = '0';
+        }
+      }, 350);
+    }
+  }
+
+  // const toggles = document.querySelectorAll( '.toggle' );
+
+  // function toggleAccordions() {
+  //   if ( ! toggles ) {
+  //     return;
+  //   }
+  //   for (let i=0; i < toggles.length; i++) {
+  //     toggles[i].addEventListener( 'click', accordionListener );
+  //   }
+  // }
+
+  // function accordionListener( ) {
+  //   this.parentElement.classList.toggle( 'open' );
+  // }
+</script>
+<script>
   const $buoop = {
     required: { e: -2, c: -20, f: -20, o: -20, o_a: -20, s: -20, y: -20, v: -20, uc: -20, ios: -20, samsung: -20 },
     text: 'You are using an outdated browser! Please update or switch to a different browser to view this site.',
@@ -20,6 +146,11 @@
   }
 </script>
 <script>
+  ready(function () {
+    openAllExternalsInTabs();
+    addNoReferrer();
+    updateYear();
+  });
   function ready(callback) {
     if (document.readyState != 'loading') callback();
     else if (document.addEventListener) document.addEventListener('DOMContentLoaded', callback);
@@ -43,8 +174,11 @@
       externalLinks[i].rel = 'noreferrer';
     }
   }
-  ready(function () {
-    openAllExternalsInTabs();
-    addNoReferrer();
-  });
+  function updateYear() {
+    const years = document.querySelectorAll('.year');
+    const currentYear = new Date().getFullYear();
+    for (const i in years) {
+      years[i].textContent = currentYear;
+    }
+  }
 </script>
